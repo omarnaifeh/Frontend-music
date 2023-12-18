@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <title>Music database</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header__container">
+      <h1>Music database</h1>
+      <p>Search for an artist, song or an album or add to the database</p>
+    </div>
+    <div class="search__container">
+      <form action="/api/artists" method="GET">
+        <input type="text" name="q" id="search" placeholder="Search for an artist, song, or an album">
+        <button type="submit" name="submit-search">Search</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchForm = document.querySelector('form');
+  
+        searchForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+  
+          const searchInput = document.getElementById('search');
+          const query = searchInput.value.trim();
+  
+          if (query !== '') {
+            fetch(`http://localhost:3000/api/artists?q=${encodeURIComponent(query)}`)
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+          }
+        });
+      });
+  </script>
+</body>
+
+</html>
